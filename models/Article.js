@@ -9,12 +9,36 @@ class Article extends Model {
           primaryKey: true,
           autoIncrement: true,
         },
-        title: {
+        name: {
           type: DataTypes.STRING,
         },
         content: {
           type: DataTypes.TEXT,
+        }, 
+          description: {
+          type: DataTypes.STRING,
         },
+           photo: {
+          type: DataTypes.STRING,
+        },
+           price: {
+          type: DataTypes.STRING,
+        }, 
+          stock: {
+          type: DataTypes.BIGINT,
+        }, 
+
+
+        categoryId: {
+          type: DataTypes.BIGINT.UNSIGNED,
+          references: {
+            model: 'categories', // este es el nombre de la tabla en la base de datos
+            key: 'id'
+          }
+        }, 
+          outstanding: {
+          type: DataTypes.STRING,
+    }
       },
       {
         sequelize,
