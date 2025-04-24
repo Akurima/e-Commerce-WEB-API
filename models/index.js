@@ -14,10 +14,15 @@ const sequelize = new Sequelize(
 // Requerir todos los modelos:
 const User = require("./User");
 const Article = require("./Article");
+const Category = require("./Category");
+const userAdmin = require("./userAdmin")
 
 // Inicializar todos los modelos:
 User.initModel(sequelize);
 Article.initModel(sequelize);
+Category.initModel(sequelize);
+userAdmin.initModel(sequelize);
+
 
 /*
  * Luego de definir los modelos, se pueden establecer relaciones entre los
