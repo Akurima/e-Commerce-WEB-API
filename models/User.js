@@ -46,11 +46,6 @@ class User extends Model {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        role: {
-          type: DataTypes.ENUM("buyer", "admin"),
-          allowNull: false,
-          defaultValue: "buyer",
-        },
       },
       {
         sequelize,

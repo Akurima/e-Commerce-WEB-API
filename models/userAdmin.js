@@ -2,7 +2,7 @@ const { Model, DataTypes } = require("sequelize");
 
 class userAdmin extends Model {
   static initModel(sequelize) {
-    User.init(
+    userAdmin.init(
       {
         id: {
           type: DataTypes.BIGINT.UNSIGNED,
