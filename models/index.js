@@ -23,14 +23,14 @@ Article.initModel(sequelize);
 Category.initModel(sequelize);
 userAdmin.initModel(sequelize);
 
+// Establecemos relaciones:
 
-/*
- * Luego de definir los modelos, se pueden establecer relaciones entre los
- * mismos (usando métodos como belongsTo, hasMany y belongsToMany)...
- *
- * Por ejemplo, si un User está relacionado con un Article, establecerlo
- * aquí abajo.
- */
+Category.hasMany(Article, { foreignKey: 'id' });
+Article.belongsTo(Category, { foreignKey: 'id' });
+
+User.hasMany(Article, {foreignkey: 'id'})
+Article.belongsTo(User, {foreignkey: 'id'})
+
 
 module.exports = {
   sequelize,
