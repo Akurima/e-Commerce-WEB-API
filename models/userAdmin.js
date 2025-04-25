@@ -2,7 +2,7 @@ const { Model, DataTypes } = require("sequelize");
 
 class userAdmin extends Model {
   static initModel(sequelize) {
-    User.init(
+    userAdmin.init(
       {
         id: {
           type: DataTypes.BIGINT.UNSIGNED,
@@ -24,7 +24,7 @@ class userAdmin extends Model {
       },
       {
         sequelize,
-        modelName: "userAdmin", // Nombre del modelo en singular y en minúscula.
+        modelName: "useradmin", // Nombre del modelo en singular y en minúscula.
       },
     );
     return userAdmin;

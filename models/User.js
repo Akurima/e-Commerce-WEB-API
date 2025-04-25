@@ -1,6 +1,11 @@
 const { Model, DataTypes } = require("sequelize");
 
 class User extends Model {
+  toJSON() {
+    const values = { ...this.get() };
+    delete values.password; // Ocultar contraseña en respuestas JSON
+    return values;
+  }
   static initModel(sequelize) {
     User.init(
       {
@@ -25,13 +30,13 @@ class User extends Model {
             isEmail: true,
           },
         },
-        direction: {
+        adress: {
           type: DataTypes.STRING,
           allowNull: false,
         },
         phone: {
           type: DataTypes.STRING,
-          allowNull: false,
+          allowNull: true,
         },
         order: {
           type: DataTypes.STRING,
@@ -40,6 +45,11 @@ class User extends Model {
         password: {
           type: DataTypes.STRING,
           allowNull: false,
+        },
+        role: {
+          type: DataTypes.ENUM("buyer", "admin"),
+          allowNull: false,
+          defaultValue: "buyer",
         },
       },
       {
