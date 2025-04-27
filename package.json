@@ -1,6 +1,6 @@
 {
-  "name": "hack-academy_proyecto-base",
-  "description": "Proyecto Base creado por Hack Academy para agilizar el desarrollo de ejercicios.",
+  "name": "e-commerce-web-api",
+  "description": "e-commerce web API",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {

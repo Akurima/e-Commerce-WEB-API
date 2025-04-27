@@ -30,7 +30,7 @@ class User extends Model {
             isEmail: true,
           },
         },
-        adress: {
+        address: {
           type: DataTypes.STRING,
           allowNull: false,
         },
@@ -45,11 +45,6 @@ class User extends Model {
         password: {
           type: DataTypes.STRING,
           allowNull: false,
-        },
-        role: {
-          type: DataTypes.ENUM("buyer", "admin"),
-          allowNull: false,
-          defaultValue: "buyer",
         },
       },
       {

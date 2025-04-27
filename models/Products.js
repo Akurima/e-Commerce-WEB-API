@@ -1,8 +1,8 @@
 const { Model, DataTypes } = require("sequelize");
 
-class Article extends Model {
+class Product extends Model {
   static initModel(sequelize) {
-    Article.init(
+    Product.init(
       {
         id: {
           type: DataTypes.BIGINT.UNSIGNED,
@@ -26,28 +26,16 @@ class Article extends Model {
         }, 
           stock: {
           type: DataTypes.BIGINT,
-        }, 
-
-
-        categoryId: {
-          type: DataTypes.BIGINT.UNSIGNED,
-          references: {
-            model: 'categories', // este es el nombre de la tabla en la base de datos
-            key: 'id'
-          }
-        }, 
-          outstanding: {
-          type: DataTypes.STRING,
-    }
+        },
       },
       {
         sequelize,
-        modelName: "article", // Nombre del modelo en singular y en minúscula.
+        modelName: "product", // Nombre del modelo en singular y en minúscula.
       },
     );
 
-    return Article;
+    return Product;
   }
 }
 
-module.exports = Article;
+module.exports = Product;
