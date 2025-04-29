@@ -12,13 +12,24 @@ class Orders extends Model {
         orderStatus: {
           type: DataTypes.STRING,
         },
-        userId: {type: DataTypes.BIGINT.UNSIGNED,
+        customerId: {type: DataTypes.BIGINT.UNSIGNED,
             allowNull: false,
             references: {
                 model: "users",
                 key: "id",
-            }
-        }
+            },
+        },
+        productId: {type: DataTypes.BIGINT.UNSIGNED,
+            allowNull: false,
+            references: {
+                model: "products",
+                key: "id",
+            },
+        },
+        quantity: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+        },
       },
       {
         sequelize,

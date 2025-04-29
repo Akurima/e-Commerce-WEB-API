@@ -1,3 +1,4 @@
+const { Admin } = require('../models');
 /*
  * Este archivo se puede usar como referencia para crear el controlador de
  * cualquier entidad del sistema.
@@ -12,19 +13,78 @@
  */
 
 // Display a listing of the resource.
-async function index(req, res) {}
+async function index(req, res) {
+  try {
+    const admins = await Admin.findAll();
+    res.json(admins);
+  } catch (error) {
+    console.error('Error en INDEX', error);
+    res.status(500).json({ error: 'ERROR: Contacte con un administrador.' });
+  }
+}
 
 // Display the specified resource.
-async function show(req, res) {}
+async function show(req, res) {
+  try {
+    const admin = await Admin.findByPk(req.params.id);
+    if (!admin) {
+      return res.status(404).json({ error: 'Admin no encontrado.' });
+    }
+    res.json(admin);
+  } catch (error) {
+    console.error('Error en SHOW', error);
+    res.status(500).json({ error: 'ERROR: Contacte con un administrador.' });
+  }
+}
 
 // Store a newly created resource in storage.
-async function store(req, res) {}
+async function store(req, res) {
+  const { firstname, lastname, email, password } = req.body;
+  try {
+    const admin = await Admin.create({
+      firstname,
+      lastname,
+      email,
+      password,
+    });
+    res.status(201).json(admin);
+  } catch (error) {
+    console.error('Error en STORE', error);
+    res.status(500).json({ error: 'ERROR: Contacte con un administrador.' });
+  }
+}
 
 // Update the specified resource in storage.
-async function update(req, res) {}
+async function update(req, res) {
+  const { firstname, lastname, email, password } = req.body;
+  try {
+    const admin = await Admin.findByPk(req.params.id);
+    if (!admin) return res.status(404).json({ error: 'Admin no encontrado.' });
+    await admin.update({
+      firstname,
+      lastname,
+      email,
+      password,
+    });
+    res.json(admin);
+  } catch (error) {
+    console.error('Error en UPDATE', error);
+    res.status(500).json({ error: 'ERROR: Contacte con un administrador.' });
+  }
+}
 
 // Remove the specified resource from storage.
-async function destroy(req, res) {}
+async function destroy(req, res) {
+  try {
+    const admin = await Admin.findByPk(req.params.id);
+    if (!admin) return res.status(404).json({ error: 'Admin no encontrado.' });
+    await admin.destroy();
+    res.json({ message: 'Admin eliminado correctamente.' });
+  } catch (error) {
+    console.error('Error en DESTROY', error);
+    res.status(500).json({ error: 'ERROR: Contacte con un administrador.' });
+  }
+}
 
 // Otros handlers...
 // ...

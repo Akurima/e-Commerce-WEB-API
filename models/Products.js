@@ -22,7 +22,7 @@ class Product extends Model {
           type: DataTypes.STRING,
         },
            price: {
-          type: DataTypes.STRING,
+          type: DataTypes.DECIMAL,
         }, 
           stock: {
           type: DataTypes.BIGINT,
