@@ -28,5 +28,5 @@ module.exports = async () => {
   }
   console.log("Categorías generadas:", categories);
   await Category.bulkCreate(categories);
-  console.log("[Database] Se corrió el seeder de Category.");
+  console.log("DB: Se corrió el seeder de Category.");
 };

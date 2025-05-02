@@ -1,5 +1,6 @@
 const { tr } = require("@faker-js/faker");
 const { User } = require("../models");
+const bcrypt = require('bcrypt');
 
 // Display a listing of the resource.
 async function index(req, res) {
@@ -29,6 +30,19 @@ async function show(req, res) {
 // Store a newly created resource in storage.
 async function store(req, res) {
   const { fistName, lastName, phone, address, order, email, password } = req.body;
+  const hashedPassword = await bcrypt.hash(password, 10); 
+  if (!fistName || !lastName || !phone || !address || !order || !email || !password) {
+    return res.status(400).json({ error: "ERROR: Todos los campos son obligatorios." });
+  }
+  if (password.length < 8) {
+    return res.status(400).json({ error: "ERROR: La contraseña debe tener al menos 8 caracteres." });
+  }
+  if (!/\d/.test(password)) {
+    return res.status(400).json({ error: "ERROR: La contraseña debe contener al menos un número." });
+  }
+  if (!/[!@#$%^&*]/.test(password)) {
+    return res.status(400).json({ error: "ERROR: La contraseña debe contener al menos un carácter especial." });
+  }
 } try {
     const user = await User.create({
       fistName,
@@ -37,7 +51,7 @@ async function store(req, res) {
       address,
       order,
       email,
-      password,
+      password: hashedPassword, 
     });
     res.status(201).json(user);
   }
@@ -80,9 +94,6 @@ async function destroy(req, res) {
     res.status(500).json({ error: "ERROR: Contacte con un administrador." });
   }
 }
-
-// Otros handlers...
-// ...
 
 module.exports = {
   index,

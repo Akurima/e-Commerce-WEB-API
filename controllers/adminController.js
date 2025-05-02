@@ -1,4 +1,5 @@
 const { Admin } = require('../models');
+const bcrypt = require('bcrypt');
 /*
  * Este archivo se puede usar como referencia para crear el controlador de
  * cualquier entidad del sistema.
@@ -40,12 +41,19 @@ async function show(req, res) {
 // Store a newly created resource in storage.
 async function store(req, res) {
   const { firstname, lastname, email, password } = req.body;
+  const hashedPassword = await bcrypt.hash(password, 10); 
+  if (!firstname || !lastname || !email || !password) {
+    return res.status(400).json({ error: 'ERROR: Todos los campos son obligatorios.' });
+  }
+  if (password.length < 8) {
+    return res.status(400).json({ error: 'ERROR: La contraseña debe tener al menos 8 caracteres.' });
+  }
   try {
     const admin = await Admin.create({
       firstname,
       lastname,
       email,
-      password,
+      password: hashedPassword, 
     });
     res.status(201).json(admin);
   } catch (error) {

@@ -10,7 +10,7 @@ class Orders extends Model {
           autoIncrement: true,
         },
         orderStatus: {
-          type: DataTypes.STRING,
+          type: DataTypes.BOOLEAN,
         },
         customerId: {type: DataTypes.BIGINT.UNSIGNED,
             allowNull: false,
