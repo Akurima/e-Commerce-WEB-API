@@ -8,7 +8,7 @@ const { where } = require("sequelize");
 async function login(req, res) {
   try {
    const {email, password} = req.body;
-   const user = User.findOne(
+   const user = await User.findOne(
     ({where: {email} }) 
    )
 
@@ -26,7 +26,7 @@ async function login(req, res) {
 
    }
    catch (error) {
-        console.error('Error en DESTROY:', error);
+        console.error('Error en LOGIN:', error);
         res.status(500).json({ error: 'ERROR: Contacte con un administrador' });
     }
 }
