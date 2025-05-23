@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "tables": "node createDatabaseTables.js",
-    "seeders": "node seeders/runAllSeeders.js"
+    "seeders": "node seeders/runAllSeeders.js",
+    "dev": "nodemon server.js"
   },
   "keywords": [],
   "author": "Hack Academy",
@@ -21,7 +22,8 @@
     "sequelize": "^6.37.5"
   },
   "devDependencies": {
-    "@faker-js/faker": "^9.2.0"
+    "@faker-js/faker": "^9.2.0",
+    "nodemon": "^3.1.10"
   },
   "repository": {
     "type": "git",
