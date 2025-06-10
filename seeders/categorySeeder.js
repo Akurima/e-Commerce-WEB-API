@@ -15,23 +15,18 @@
  */
 
 const faker = require("@faker-js/faker").fakerES;
-const { User } = require("../models");
+const { Category } = require("../models");
 
 module.exports = async () => {
-  const users = [];
+  const categories = [];
 
-  for (let i = 0; i < 50; i++) {
-    users.push({
-      firstname: faker.person.firstName(),
-      lastname: faker.person.lastName(),
-      email: faker.internet.email(),
-      address: faker.location.streetAddress(),
-      phone: faker.phone.number(),
-      order: faker.commerce.productName(),
-      password: faker.internet.password(10, false, /[a-zA-Z0-9]/),
+  for (let i = 0; i < 8; i++) {
+    categories.push({
+        name: faker.commerce.department(),
+        description: faker.commerce.productDescription(),
     });
   }
-
-  await User.bulkCreate(users);
-  console.log("DB: Se corrió el seeder de Users.");
+  console.log("Categorías generadas:", categories);
+  await Category.bulkCreate(categories);
+  console.log("DB: Se corrió el seeder de Category.");
 };

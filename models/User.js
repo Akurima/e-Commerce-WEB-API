@@ -30,7 +30,7 @@ class User extends Model {
             isEmail: true,
           },
         },
-        adress: {
+        address: {
           type: DataTypes.STRING,
           allowNull: false,
         },

@@ -10,22 +10,25 @@
  *
  * Suele ser común que en los seeders exista un `for` donde se define la
  * cantidad de registros de prueba que se insertarán en la base de datos.
- * En este ejemplo se están insertando 500 artículos con textos ficticios.
+ *
+ * En este ejemplo se están insertando 100 usuarios con nombres ficticios.
  */
 
 const faker = require("@faker-js/faker").fakerES;
-const { Article } = require("../models");
+const { Admin } = require("../models");
 
 module.exports = async () => {
-  const articles = [];
+  const admins = [];
 
-  for (let i = 0; i < 500; i++) {
-    articles.push({
-      title: faker.lorem.sentence(5),
-      content: faker.lorem.paragraphs(),
+  for (let i = 0; i < 10; i++) {
+    admins.push({
+      firstname: faker.person.firstName(),
+      lastname: faker.person.lastName(),
+      email: faker.internet.email(),
+      password: faker.internet.password(10, false, /[a-zA-Z0-9]/),
     });
   }
 
-  await Article.bulkCreate(articles);
-  console.log("[Database] Se corrió el seeder de Articles.");
+  await Admin.bulkCreate(admins);
+  console.log("DB: Se corrió el seeder de Admins.");
 };
