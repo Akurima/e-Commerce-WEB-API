@@ -1,36 +1,50 @@
-const { tr } = require("@faker-js/faker");
 const { User } = require("../models");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { where } = require("sequelize");
-
 
 async function login(req, res) {
   try {
-   const {email, password} = req.body;
-   const user = await User.findOne(
-    ({where: {email} }) 
-   )
+    const { email, password } = req.body;
 
-   if (user) {
-    const passwordMatch = await bcrypt.compare(
-        password,
-        user.password
-    )
+    // Validación básica
+    if (!email || !password) {
+      return res.status(400).json({ error: "Faltan campos obligatorios" });
+    }
+
+    // Buscar usuario por email
+    const user = await User.findOne({ where: { email } });
+
+    if (!user) {
+      return res.status(401).json({ error: "Email o contraseña incorrectos" });
+    }
+
+    // Comparar contraseña
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
     if (!passwordMatch) {
-        return res.status(401).json ({error: "Su contraseña no coincide"})
+      return res.status(401).json({ error: "Email o contraseña incorrectos" });
     }
-    const token = jwt.sign({ sub: user.id }, "UnStringMuySecreto");
-    return res.json(token)
-   } else {return res.status(401).json ({error: "Su contraseña no coincide"}) } 
 
-   }
-   catch (error) {
-        console.error('Error en LOGIN:', error);
-        res.status(500).json({ error: 'ERROR: Contacte con un administrador' });
-    }
+    // Generar token
+    const token = jwt.sign(
+      { id: user.id, email: user.email },
+      process.env.JWT_SECRET || "UnStringMuySecreto",
+      { expiresIn: "1h" },
+    );
+
+    // Devolver token y datos del usuario
+    return res.json({
+      token,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+      },
+    });
+  } catch (error) {
+    console.error("Error en LOGIN:", error);
+    res.status(500).json({ error: "ERROR: Contacte con un administrador" });
+  }
 }
 
-
-
-module.exports = {login};
+module.exports = { login };
