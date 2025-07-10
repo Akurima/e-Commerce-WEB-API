@@ -1,6 +1,34 @@
 const { User } = require("../models");
 const bcrypt = require("bcrypt");
 
+// 🆕 Registro de nuevo usuario
+async function registerUser(req, res) {
+  const { email, password } = req.body;
+
+  try {
+    if (!email || !password) {
+      return res.status(400).json({ error: "Faltan datos obligatorios." });
+    }
+
+    const existingUser = await User.findOne({ where: { email } });
+    if (existingUser) {
+      return res.status(400).json({ error: "El email ya está registrado." });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await User.create({
+      email,
+      password: hashedPassword,
+    });
+
+    res.status(201).json({ message: "Usuario creado con éxito." });
+  } catch (error) {
+    console.error("Error en registerUser:", error);
+    res.status(500).json({ error: "ERROR: Contacte con un administrador." });
+  }
+}
+
 // Display a listing of the resource.
 async function index(req, res) {
   try {
@@ -35,15 +63,21 @@ async function store(req, res) {
   }
 
   if (password.length < 8) {
-    return res.status(400).json({ error: "ERROR: La contraseña debe tener al menos 8 caracteres." });
+    return res
+      .status(400)
+      .json({ error: "ERROR: La contraseña debe tener al menos 8 caracteres." });
   }
 
   if (!/\d/.test(password)) {
-    return res.status(400).json({ error: "ERROR: La contraseña debe contener al menos un número." });
+    return res
+      .status(400)
+      .json({ error: "ERROR: La contraseña debe contener al menos un número." });
   }
 
   if (!/[!@#$%^&*]/.test(password)) {
-    return res.status(400).json({ error: "ERROR: La contraseña debe contener al menos un carácter especial." });
+    return res
+      .status(400)
+      .json({ error: "ERROR: La contraseña debe contener al menos un carácter especial." });
   }
 
   try {
@@ -111,6 +145,7 @@ async function destroy(req, res) {
 }
 
 module.exports = {
+  registerUser, // 🧩 nuevo export
   index,
   show,
   store,

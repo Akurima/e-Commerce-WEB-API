@@ -15,4 +15,7 @@ router.get("/:id", userController.show);
 router.patch("/:id", userController.update);
 router.delete("/:id", userController.destroy);
 
+// 🆕 Endpoint para registrar un nuevo usuario
+router.post("/register", userController.registerUser);
+
 module.exports = router;
