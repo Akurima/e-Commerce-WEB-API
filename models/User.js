@@ -32,7 +32,7 @@ class User extends Model {
         },
         address: {
           type: DataTypes.STRING,
-          allowNull: false,
+          allowNull: true,
         },
         phone: {
           type: DataTypes.STRING,
@@ -40,7 +40,7 @@ class User extends Model {
         },
         order: {
           type: DataTypes.STRING,
-          allowNull: false,
+          allowNull: true,
         },
         password: {
           type: DataTypes.STRING,

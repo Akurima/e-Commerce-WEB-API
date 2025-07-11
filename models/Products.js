@@ -14,17 +14,17 @@ class Product extends Model {
         },
         content: {
           type: DataTypes.TEXT,
-        }, 
-          description: {
+        },
+        description: {
           type: DataTypes.STRING,
         },
-           photo: {
+        photo: {
           type: DataTypes.STRING,
         },
-           price: {
+        price: {
           type: DataTypes.DECIMAL,
-        }, 
-          stock: {
+        },
+        stock: {
           type: DataTypes.BIGINT,
         },
       },

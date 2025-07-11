@@ -3,10 +3,10 @@ const bcrypt = require("bcrypt");
 
 // 🆕 Registro de nuevo usuario
 async function registerUser(req, res) {
-  const { email, password } = req.body;
+  const { email, password, firstname, lastname } = req.body;
 
   try {
-    if (!email || !password) {
+    if (!email || !password || !firstname || !lastname) {
       return res.status(400).json({ error: "Faltan datos obligatorios." });
     }
 
@@ -20,6 +20,8 @@ async function registerUser(req, res) {
     await User.create({
       email,
       password: hashedPassword,
+      firstname,
+      lastname,
     });
 
     res.status(201).json({ message: "Usuario creado con éxito." });
@@ -56,9 +58,9 @@ async function show(req, res) {
 
 // Store a newly created resource in storage.
 async function store(req, res) {
-  const { fistName, lastName, phone, address, order, email, password } = req.body;
+  const { firstname, lastname, phone, address, order, email, password } = req.body;
 
-  if (!fistName || !lastName || !phone || !address || !order || !email || !password) {
+  if (!firstname || !lastname || !phone || !address || !order || !email || !password) {
     return res.status(400).json({ error: "ERROR: Todos los campos son obligatorios." });
   }
 
@@ -84,8 +86,8 @@ async function store(req, res) {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({
-      fistName,
-      lastName,
+      firstname,
+      lastname,
       phone,
       address,
       order,
@@ -102,15 +104,15 @@ async function store(req, res) {
 
 // Update the specified resource in storage.
 async function update(req, res) {
-  const { fistName, lastName, phone, address, order, email, password } = req.body;
+  const { firstname, lastname, phone, address, order, email, password } = req.body;
 
   try {
     const user = await User.findByPk(req.params.id);
     if (!user) return res.status(404).json({ error: "Usuario no encontrado." });
 
     const updatedData = {
-      fistName,
-      lastName,
+      firstname,
+      lastname,
       phone,
       address,
       order,
