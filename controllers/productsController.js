@@ -1,12 +1,12 @@
-const { Products, Category } = require("../models"); // ✅ ahora se importa Category también
+const { Products } = require("../models");
 
-// Mostrar todos los productos
+// Mostrar todos los productos con categoría incluida
 async function index(req, res) {
   try {
     const products = await Products.findAll({
       include: {
-        model: Category,
-        attributes: ["name"], // ✅ solo traemos el nombre de la categoría
+        association: "category", // Asociación definida en el modelo
+        attributes: ["name"], // Solo nos interesa el nombre de la categoría
       },
     });
     res.status(200).json(products);
