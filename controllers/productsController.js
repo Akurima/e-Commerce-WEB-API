@@ -1,9 +1,14 @@
-const { Products } = require("../models");
+const { Products, Category } = require("../models"); // ✅ ahora se importa Category también
 
 // Mostrar todos los productos
 async function index(req, res) {
   try {
-    const products = await Products.findAll();
+    const products = await Products.findAll({
+      include: {
+        model: Category,
+        attributes: ["name"], // ✅ solo traemos el nombre de la categoría
+      },
+    });
     res.status(200).json(products);
   } catch (error) {
     console.error("Error en INDEX", error);
