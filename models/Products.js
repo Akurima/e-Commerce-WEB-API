@@ -6,34 +6,35 @@ class Product extends Model {
       {
         id: {
           type: DataTypes.BIGINT.UNSIGNED,
-          primaryKey: true,
           autoIncrement: true,
+          primaryKey: true,
         },
         name: {
           type: DataTypes.STRING,
-        },
-        content: {
-          type: DataTypes.TEXT,
-        },
-        description: {
-          type: DataTypes.STRING,
-        },
-        photo: {
-          type: DataTypes.STRING,
+          allowNull: false,
         },
         price: {
-          type: DataTypes.DECIMAL,
+          type: DataTypes.DECIMAL(10, 2),
+          allowNull: false,
         },
         stock: {
-          type: DataTypes.BIGINT,
+          type: DataTypes.INTEGER,
+          allowNull: false,
+        },
+        image: {
+          type: DataTypes.STRING,
+          allowNull: false,
+        },
+        description: {
+          type: DataTypes.TEXT,
+          allowNull: true,
         },
       },
       {
         sequelize,
-        modelName: "product", // Nombre del modelo en singular y en minúscula.
+        modelName: "product", // Sequelize usará "products" como nombre de tabla
       },
     );
-
     return Product;
   }
 }

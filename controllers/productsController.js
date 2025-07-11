@@ -27,9 +27,9 @@ async function show(req, res) {
 
 // Crear un nuevo producto
 async function store(req, res) {
-  const { name, content, description, photo, price, stock } = req.body;
+  const { name, description, image, price, stock } = req.body;
   try {
-    const newProduct = await Products.create({ name, content, description, photo, price, stock });
+    const newProduct = await Products.create({ name, description, image, price, stock });
     res.status(201).json(newProduct);
   } catch (error) {
     console.error("Error en STORE", error);
@@ -39,13 +39,13 @@ async function store(req, res) {
 
 // Actualizar un producto existente
 async function update(req, res) {
-  const { name, content, description, photo, price, stock } = req.body;
+  const { name, description, image, price, stock } = req.body;
   try {
     const product = await Products.findByPk(req.params.id);
     if (!product) {
       return res.status(404).json({ error: "Producto no encontrado" });
     }
-    await product.update({ name, content, description, photo, price, stock });
+    await product.update({ name, description, image, price, stock });
     res.json(product);
   } catch (error) {
     console.error("Error en UPDATE", error);
